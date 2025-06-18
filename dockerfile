@@ -4,7 +4,7 @@ FROM python:3.9-slim-buster
 # Définissez le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copiez le fichier requirements.txt et installez les dépendances
+# Copiez le fichier requirements.txt et installez les dépendance
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip -r requirements.txt
 
