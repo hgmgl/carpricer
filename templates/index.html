@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prédiction de Prix de Voiture</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Estimez le Prix de Votre Voiture</h1>
+        <form action="/predict" method="post">
+            <div class="form-group">
+                <label for="year">Année :</label>
+                <input type="number" id="year" name="year" required min="1900" max="{{ current_year }}" value="2018">
+            </div>
+            <div class="form-group">
+                <label for="manufacturer">Marque :</label>
+                <input type="text" id="manufacturer" name="manufacturer" required placeholder="Ex: HONDA">
+            </div>
+            <div class="form-group">
+                <label for="model">Modèle :</label>
+                <input type="text" id="model" name="model" required placeholder="Ex: CIVIC">
+            </div>
+            <div class="form-group">
+                <label for="odometer">Kilométrage :</label>
+                <input type="number" id="odometer" name="odometer" required min="0" value="80000">
+            </div>
+            <div class="form-group">
+                <label for="cylinders">Cylindres (optionnel) :</label>
+                <input type="number" id="cylinders" name="cylinders" min="2" max="16" placeholder="Ex: 4">
+            </div>
+            <div class="form-group">
+                <label for="region">Région (optionnel) :</label>
+                <input type="text" id="region" name="region" placeholder="Ex: dubai">
+            </div>
+            <div class="form-group">
+                <label for="condition">Condition (optionnel) :</label>
+                <input type="text" id="condition" name="condition" placeholder="Ex: excellent">
+            </div>
+            <div class="form-group">
+                <label for="fuel">Carburant (optionnel) :</label>
+                <input type="text" id="fuel" name="fuel" placeholder="Ex: GAS">
+            </div>
+            <div class="form-group">
+                <label for="transmission">Transmission (optionnel) :</label>
+                <input type="text" id="transmission" name="transmission" placeholder="Ex: automatic">
+            </div>
+            <div class="form-group">
+                <label for="drive">Roues Motrices (optionnel) :</label>
+                <input type="text" id="drive" name="drive" placeholder="Ex: fwd">
+            </div>
+            <div class="form-group">
+                <label for="type">Type de Carrosserie (optionnel) :</label>
+                <input type="text" id="type" name="type" placeholder="Ex: sedan">
+            </div>
+            <div class="form-group">
+                <label for="paint_color">Couleur (optionnel) :</label>
+                <input type="text" id="paint_color" name="paint_color" placeholder="Ex: silver">
+            </div>
+            
+            <button type="submit">Prédire le prix</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="prediction-result">
+                <h2>{{ prediction_text }}</h2>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Set max year for the 'year' input on page load
+        document.getElementById('year').max = new Date().getFullYear();
+    </script>
+</body>
+</html>

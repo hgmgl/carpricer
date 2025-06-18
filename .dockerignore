@@ -1,0 +1,11 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+*.log
+.venv
+venv/
+instance/
+# Assurez-vous que ces lignes sont bien présentes
+modele_prediction_voiture_final.joblib
+vehicles.csv
