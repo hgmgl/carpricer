@@ -5,4 +5,4 @@ joblib
 numpy
 gunicorn
 requests
-# ... autres dépendances de votre projet
+# ... autres dépendances de votre proje
