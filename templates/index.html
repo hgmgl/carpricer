@@ -25,8 +25,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="manufacturer">Marque :</label>
-                            <select id="manufacturer" name="manufacturer" required>
+                            <label for="manufacturer_select">Marque :</label>
+                            <select id="manufacturer_select" name="manufacturer" required>
                                 <option value="" disabled selected>Sélectionner une marque</option>
                                 <option value="ford">Ford</option>
                                 <option value="toyota">Toyota</option>
@@ -34,8 +34,9 @@
                                 <option value="chevrolet">Chevrolet</option>
                                 <option value="bmw">BMW</option>
                                 <option value="mercedes-benz">Mercedes-Benz</option>
-                                <option value="autre">Autre</option>
-                                </select>
+                                <option value="other_input">Autre (préciser)</option> 
+                            </select>
+                            <input type="text" id="manufacturer_other" placeholder="Précisez la marque" style="display: none;" disabled>
                         </div>
 
                         <div class="form-group">
@@ -63,14 +64,21 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="region">Région :</label>
+                            <label for="region">Pays de Localisation :</label>
                             <select id="region" name="region" required>
-                                <option value="" disabled selected>Sélectionner une région</option>
-                                <option value="ouest">Ouest</option>
-                                <option value="sud">Sud</option>
-                                <option value="nord-est">Nord-Est</option>
-                                <option value="midwest">Midwest</option>
-                                <option value="autres">Autres</option>
+                                <option value="" disabled selected>Sélectionner un pays</option>
+                                <option value="usa">États-Unis</option>
+                                <option value="canada">Canada</option>
+                                <option value="mexico">Mexique</option>
+                                <option value="france">France</option>
+                                <option value="germany">Allemagne</option>
+                                <option value="uk">Royaume-Uni</option>
+                                <option value="japan">Japon</option>
+                                <option value="china">Chine</option>
+                                <option value="india">Inde</option>
+                                <option value="australia">Australie</option>
+                                <option value="brazil">Brésil</option>
+                                <option value="other_country">Autre Pays</option>
                                 </select>
                         </div>
 
@@ -167,5 +175,37 @@
             <p>&copy; {{ current_year }} Futuristik Car. Tous droits réservés.</p>
         </footer>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const manufacturerSelect = document.getElementById('manufacturer_select');
+            const manufacturerOtherInput = document.getElementById('manufacturer_other');
+
+            function updateManufacturerInput() {
+                if (manufacturerSelect.value === 'other_input') {
+                    manufacturerOtherInput.style.display = 'block';
+                    manufacturerOtherInput.removeAttribute('disabled');
+                    manufacturerOtherInput.setAttribute('required', 'required');
+                    // Important: assure que seul l'input text a le nom 'manufacturer' pour l'envoi du formulaire
+                    manufacturerOtherInput.setAttribute('name', 'manufacturer');
+                    manufacturerSelect.removeAttribute('name'); 
+                } else {
+                    manufacturerOtherInput.style.display = 'none';
+                    manufacturerOtherInput.setAttribute('disabled', 'disabled');
+                    manufacturerOtherInput.removeAttribute('required');
+                    manufacturerOtherInput.value = ''; // Réinitialise la valeur
+                    // Important: assure que seul le select a le nom 'manufacturer'
+                    manufacturerSelect.setAttribute('name', 'manufacturer');
+                    manufacturerOtherInput.removeAttribute('name');
+                }
+            }
+
+            // Écoute les changements sur le select de la marque
+            manufacturerSelect.addEventListener('change', updateManufacturerInput);
+
+            // Initialise l'état au chargement de la page (au cas où "Autre" serait présélectionné par le navigateur)
+            updateManufacturerInput();
+        });
+    </script>
 </body>
 </html>
