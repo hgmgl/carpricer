@@ -3,75 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prédiction de Prix de Voiture</title>
+    <title>Prédiction de Prix Automobile - Futuristik Car</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Estimez le Prix de Votre Voiture</h1>
-        <form action="/predict" method="post">
-            <div class="form-group">
-                <label for="year">Année :</label>
-                <input type="number" id="year" name="year" required min="1900" max="{{ current_year }}" value="2018">
-            </div>
-            <div class="form-group">
-                <label for="manufacturer">Marque :</label>
-                <input type="text" id="manufacturer" name="manufacturer" required placeholder="Ex: HONDA">
-            </div>
-            <div class="form-group">
-                <label for="model">Modèle :</label>
-                <input type="text" id="model" name="model" required placeholder="Ex: CIVIC">
-            </div>
-            <div class="form-group">
-                <label for="odometer">Kilométrage :</label>
-                <input type="number" id="odometer" name="odometer" required min="0" value="80000">
-            </div>
-            <div class="form-group">
-                <label for="cylinders">Cylindres (optionnel) :</label>
-                <input type="number" id="cylinders" name="cylinders" min="2" max="16" placeholder="Ex: 4">
-            </div>
-            <div class="form-group">
-                <label for="region">Région (optionnel) :</label>
-                <input type="text" id="region" name="region" placeholder="Ex: dubai">
-            </div>
-            <div class="form-group">
-                <label for="condition">Condition (optionnel) :</label>
-                <input type="text" id="condition" name="condition" placeholder="Ex: excellent">
-            </div>
-            <div class="form-group">
-                <label for="fuel">Carburant (optionnel) :</label>
-                <input type="text" id="fuel" name="fuel" placeholder="Ex: GAS">
-            </div>
-            <div class="form-group">
-                <label for="transmission">Transmission (optionnel) :</label>
-                <input type="text" id="transmission" name="transmission" placeholder="Ex: automatic">
-            </div>
-            <div class="form-group">
-                <label for="drive">Roues Motrices (optionnel) :</label>
-                <input type="text" id="drive" name="drive" placeholder="Ex: fwd">
-            </div>
-            <div class="form-group">
-                <label for="type">Type de Carrosserie (optionnel) :</label>
-                <input type="text" id="type" name="type" placeholder="Ex: sedan">
-            </div>
-            <div class="form-group">
-                <label for="paint_color">Couleur (optionnel) :</label>
-                <input type="text" id="paint_color" name="paint_color" placeholder="Ex: silver">
-            </div>
-            
-            <button type="submit">Prédire le prix</button>
-        </form>
+        <header class="app-header">
+            <h1 class="app-title"><span class="highlight-text">FUTURISTIK</span> CAR PRICE PREDICTOR</h1>
+            <p class="app-tagline">Estimez la valeur de votre véhicule avec précision.</p>
+        </header>
 
-        {% if prediction_text %}
-            <div class="prediction-result">
-                <h2>{{ prediction_text }}</h2>
-            </div>
-        {% endif %}
+        <main class="main-content">
+            <section class="prediction-form-section">
+                <h2 class="section-title">Entrez les détails du véhicule</h2>
+                <form action="/predict" method="post" class="prediction-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="year">Année :</label>
+                            <input type="number" id="year" name="year" min="1900" max="{{ current_year }}" value="{{ current_year }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="manufacturer">Marque :</label>
+                            <select id="manufacturer" name="manufacturer" required>
+                                <option value="" disabled selected>Sélectionner une marque</option>
+                                <option value="ford">Ford</option>
+                                <option value="toyota">Toyota</option>
+                                <option value="honda">Honda</option>
+                                <option value="chevrolet">Chevrolet</option>
+                                <option value="bmw">BMW</option>
+                                <option value="mercedes-benz">Mercedes-Benz</option>
+                                <option value="autre">Autre</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="model">Modèle :</label>
+                            <input type="text" id="model" name="model" placeholder="Ex: F-150, Civic" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="odometer">Kilométrage :</label>
+                            <input type="number" id="odometer" name="odometer" min="0" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cylinders">Cylindres :</label>
+                            <select id="cylinders" name="cylinders" required>
+                                <option value="" disabled selected>Sélectionner</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="region">Région :</label>
+                            <select id="region" name="region" required>
+                                <option value="" disabled selected>Sélectionner une région</option>
+                                <option value="ouest">Ouest</option>
+                                <option value="sud">Sud</option>
+                                <option value="nord-est">Nord-Est</option>
+                                <option value="midwest">Midwest</option>
+                                <option value="autres">Autres</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="condition">Condition :</label>
+                            <select id="condition" name="condition" required>
+                                <option value="" disabled selected>Sélectionner une condition</option>
+                                <option value="neuf">Neuf</option>
+                                <option value="excellent">Excellent</option>
+                                <option value="bon">Bon</option>
+                                <option value="moyen">Moyen</option>
+                                <option value="sauvetage">Sauvetage</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fuel">Carburant :</label>
+                            <select id="fuel" name="fuel" required>
+                                <option value="" disabled selected>Sélectionner un type</option>
+                                <option value="essence">Essence</option>
+                                <option value="diesel">Diesel</option>
+                                <option value="hybride">Hybride</option>
+                                <option value="electrique">Électrique</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="transmission">Transmission :</label>
+                            <select id="transmission" name="transmission" required>
+                                <option value="" disabled selected>Sélectionner</option>
+                                <option value="automatique">Automatique</option>
+                                <option value="manuelle">Manuelle</option>
+                                <option value="autre">Autre</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="drive">Roues motrices :</label>
+                            <select id="drive" name="drive" required>
+                                <option value="" disabled selected>Sélectionner</option>
+                                <option value="rwd">RWD</option>
+                                <option value="fwd">FWD</option>
+                                <option value="4wd">4WD</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">Type de Carrosserie :</label>
+                            <select id="type" name="type" required>
+                                <option value="" disabled selected>Sélectionner un type</option>
+                                <option value="berline">Berline</option>
+                                <option value="suv">SUV</option>
+                                <option value="camion">Camion</option>
+                                <option value="coupe">Coupé</option>
+                                <option value="break">Break</option>
+                                <option value="minivan">Minivan</option>
+                                <option value="hatchback">Hayon</option>
+                                <option value="wagon">Break (Wagon)</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paint_color">Couleur Extérieure :</label>
+                            <select id="paint_color" name="paint_color" required>
+                                <option value="" disabled selected>Sélectionner une couleur</option>
+                                <option value="blanc">Blanc</option>
+                                <option value="noir">Noir</option>
+                                <option value="argent">Argent</option>
+                                <option value="gris">Gris</option>
+                                <option value="bleu">Bleu</option>
+                                <option value="rouge">Rouge</option>
+                                <option value="vert">Vert</option>
+                                <option value="jaune">Jaune</option>
+                                <option value="autre">Autre</option>
+                                </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="predict-button">PREDIRE LE PRIX</button>
+                </form>
+            </section>
+
+            {% if prediction_text %}
+            <section class="prediction-result-section">
+                <h2 class="section-title">Résultat de la Prédiction</h2>
+                <div class="prediction-result">
+                    {{ prediction_text }}
+                </div>
+            </section>
+            {% endif %}
+        </main>
+
+        <footer class="app-footer">
+            <p>&copy; {{ current_year }} Futuristik Car. Tous droits réservés.</p>
+        </footer>
     </div>
-
-    <script>
-        // Set max year for the 'year' input on page load
-        document.getElementById('year').max = new Date().getFullYear();
-    </script>
 </body>
 </html>
