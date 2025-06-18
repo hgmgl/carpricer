@@ -267,7 +267,7 @@ def predict():
         # Faire la prédiction
         predicted_price = model.predict(processed_input_df)[0]
 
-        return render_template('index.html', prediction_text=f"Le prix de vente prédit est : {predicted_price:,.2f} AED",
+        return render_template('index.html', prediction_text=f"Le prix de vente prédit est : {predicted_price:,.2f} usd",
                                current_year=pd.Timestamp.now().year)
 
     except Exception as e:
