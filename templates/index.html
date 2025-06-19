@@ -4,54 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prédiction de Prix Automobile - Votre Outil d'Estimation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Chargement de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .app-header {
+            background-image: linear-gradient(to right, #4a90e2, #50b3e8);
+        }
+        .predict-button {
+            background-image: linear-gradient(to right, #2ecc71, #27ae60);
+            transition: all 0.3s ease;
+        }
+        .predict-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .form-group label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .form-group input,
+        .form-group select {
+            border: 1px solid #cbd5e0;
+            border-radius: 0.375rem; /* rounded-md */
+            padding: 0.625rem 0.75rem; /* p-2.5 */
+            font-size: 1rem; /* text-base */
+            color: #2d3748;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header class="app-header">
-            <h1 class="app-title">CAR PRICE PREDICTOR</h1>
-            <p class="app-tagline">Estimez la valeur de votre véhicule avec précision et simplicité.</p>
+<body class="flex flex-col min-h-screen text-gray-800">
+    <div class="container mx-auto p-4 md:p-8 flex-grow">
+        <header class="app-header text-white p-6 rounded-lg shadow-md mb-8 text-center">
+            <h1 class="app-title text-3xl md:text-4xl font-extrabold mb-2">CAR PRICE PREDICTOR</h1>
+            <p class="app-tagline text-lg md:text-xl font-light opacity-90">Estimez la valeur de votre véhicule avec précision et simplicité.</p>
         </header>
 
-        <main class="main-content">
+        <main class="main-content bg-white p-6 rounded-lg shadow-md">
             <section class="prediction-form-section">
-                <h2 class="section-title">Entrez les détails du véhicule</h2>
+                <h2 class="section-title text-2xl font-bold mb-6 text-center text-gray-700">Entrez les détails du véhicule</h2>
                 <form action="/predict" method="post" class="prediction-form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="year">Année :</label>
-                            <input type="number" id="year" name="year" min="1900" max="{{ current_year }}" value="{{ current_year }}" required>
+                    <div class="form-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        <!-- Année -->
+                        <div class="form-group flex flex-col">
+                            <label for="year" class="mb-2 text-sm">Année :</label>
+                            <input type="number" id="year" name="year" min="1900" max="{{ current_year }}" value="{{ current_year }}" required class="w-full">
                         </div>
 
-                        <div class="form-group">
-                            <label for="manufacturer_select">Marque :</label>
-                            <select id="manufacturer_select" name="manufacturer" required>
+                        <!-- Marque -->
+                        <div class="form-group flex flex-col">
+                            <label for="manufacturer_select" class="mb-2 text-sm">Marque :</label>
+                            <select id="manufacturer_select" name="manufacturer" required class="w-full">
                                 <option value="" disabled selected>Sélectionner une marque</option>
-                                <option value="ford">Ford</option>
-                                <option value="toyota">Toyota</option>
-                                <option value="honda">Honda</option>
-                                <option value="chevrolet">Chevrolet</option>
-                                <option value="bmw">BMW</option>
-                                <option value="mercedes-benz">Mercedes-Benz</option>
-                                <option value="other_input">Autre (préciser)</option> 
+                                <option value="ACURA">ACURA</option>
+                                <option value="ALFA-ROMEO">ALFA-ROMEO</option>
+                                <option value="ASTON-MARTIN">ASTON-MARTIN</option>
+                                <option value="AUDI">AUDI</option>
+                                <option value="BMW">BMW</option>
+                                <option value="BUICK">BUICK</option>
+                                <option value="CADILLAC">CADILLAC</option>
+                                <option value="CHEVROLET">CHEVROLET</option>
+                                <option value="CHRYSLER">CHRYSLER</option>
+                                <option value="DATSUN">DATSUN</option>
+                                <option value="DODGE">DODGE</option>
+                                <option value="FERRARI">FERRARI</option>
+                                <option value="FIAT">FIAT</option>
+                                <option value="FORD">FORD</option>
+                                <option value="GMC">GMC</option>
+                                <option value="HARLEY-DAVIDSON">HARLEY-DAVIDSON</option>
+                                <option value="HONDA">HONDA</option>
+                                <option value="HYUNDAI">HYUNDAI</option>
+                                <option value="INFINITI">INFINITI</option>
+                                <option value="JAGUAR">JAGUAR</option>
+                                <option value="JEEP">JEEP</option>
+                                <option value="KIA">KIA</option>
+                                <option value="LAND ROVER">LAND ROVER</option>
+                                <option value="LEXUS">LEXUS</option>
+                                <option value="LINCOLN">LINCOLN</option>
+                                <option value="MAZDA">MAZDA</option>
+                                <option value="MERCEDES-BENZ">MERCEDES-BENZ</option>
+                                <option value="MERCURY">MERCURY</option>
+                                <option value="MINI">MINI</option>
+                                <option value="MITSUBISHI">MITSUBISHI</option>
+                                <option value="MORGAN">MORGAN</option>
+                                <option value="NISSAN">NISSAN</option>
+                                <option value="PONTIAC">PONTIAC</option>
+                                <option value="PORSCHE">PORSCHE</option>
+                                <option value="RAM">RAM</option>
+                                <option value="ROVER">ROVER</option>
+                                <option value="SATURN">SATURN</option>
+                                <option value="SUBARU">SUBARU</option>
+                                <option value="TESLA">TESLA</option>
+                                <option value="TOYOTA">TOYOTA</option>
+                                <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+                                <option value="VOLVO">VOLVO</option>
+                                <option value="other_input">Autre (préciser)</option>
                             </select>
-                            <input type="text" id="manufacturer_other" placeholder="Précisez la marque" style="display: none;" disabled>
+                            <input type="text" id="manufacturer_other" placeholder="Précisez la marque" class="w-full mt-2 hidden">
                         </div>
 
-                        <div class="form-group">
-                            <label for="model">Modèle :</label>
-                            <input type="text" id="model" name="model" placeholder="Ex: F-150, Civic" required>
+                        <!-- Modèle -->
+                        <div class="form-group flex flex-col">
+                            <label for="model" class="mb-2 text-sm">Modèle :</label>
+                            <input type="text" id="model" name="model" placeholder="Ex: F-150, Civic" required class="w-full">
                         </div>
 
-                        <div class="form-group">
-                            <label for="odometer">Kilométrage :</label>
-                            <input type="number" id="odometer" name="odometer" min="0" required>
+                        <!-- Kilométrage -->
+                        <div class="form-group flex flex-col">
+                            <label for="odometer" class="mb-2 text-sm">Kilométrage :</label>
+                            <input type="number" id="odometer" name="odometer" min="0" required class="w-full">
                         </div>
 
-                        <div class="form-group">
-                            <label for="cylinders">Cylindres :</label>
-                            <select id="cylinders" name="cylinders" required>
+                        <!-- Cylindres -->
+                        <div class="form-group flex flex-col">
+                            <label for="cylinders" class="mb-2 text-sm">Cylindres :</label>
+                            <select id="cylinders" name="cylinders" required class="w-full">
                                 <option value="" disabled selected>Sélectionner</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
@@ -60,12 +138,13 @@
                                 <option value="8">8</option>
                                 <option value="10">10</option>
                                 <option value="12">12</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="region">Pays de Localisation :</label>
-                            <select id="region" name="region" required>
+                        <!-- Pays de Localisation -->
+                        <div class="form-group flex flex-col">
+                            <label for="region" class="mb-2 text-sm">Pays de Localisation :</label>
+                            <select id="region" name="region" required class="w-full">
                                 <option value="" disabled selected>Sélectionner un pays</option>
                                 <option value="usa">États-Unis</option>
                                 <option value="canada">Canada</option>
@@ -79,55 +158,60 @@
                                 <option value="australia">Australie</option>
                                 <option value="brazil">Brésil</option>
                                 <option value="other_country">Autre Pays</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="condition">Condition :</label>
-                            <select id="condition" name="condition" required>
+                        <!-- Condition -->
+                        <div class="form-group flex flex-col">
+                            <label for="condition" class="mb-2 text-sm">Condition :</label>
+                            <select id="condition" name="condition" required class="w-full">
                                 <option value="" disabled selected>Sélectionner une condition</option>
                                 <option value="neuf">Neuf</option>
                                 <option value="excellent">Excellent</option>
                                 <option value="bon">Bon</option>
                                 <option value="moyen">Moyen</option>
                                 <option value="sauvetage">Sauvetage</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="fuel">Carburant :</label>
-                            <select id="fuel" name="fuel" required>
+                        <!-- Carburant -->
+                        <div class="form-group flex flex-col">
+                            <label for="fuel" class="mb-2 text-sm">Carburant :</label>
+                            <select id="fuel" name="fuel" required class="w-full">
                                 <option value="" disabled selected>Sélectionner un type</option>
                                 <option value="essence">Essence</option>
                                 <option value="diesel">Diesel</option>
                                 <option value="hybride">Hybride</option>
                                 <option value="electrique">Électrique</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="transmission">Transmission :</label>
-                            <select id="transmission" name="transmission" required>
+                        <!-- Transmission -->
+                        <div class="form-group flex flex-col">
+                            <label for="transmission" class="mb-2 text-sm">Transmission :</label>
+                            <select id="transmission" name="transmission" required class="w-full">
                                 <option value="" disabled selected>Sélectionner</option>
                                 <option value="automatique">Automatique</option>
                                 <option value="manuelle">Manuelle</option>
                                 <option value="autre">Autre</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="drive">Roues motrices :</label>
-                            <select id="drive" name="drive" required>
+                        <!-- Roues motrices -->
+                        <div class="form-group flex flex-col">
+                            <label for="drive" class="mb-2 text-sm">Roues motrices :</label>
+                            <select id="drive" name="drive" required class="w-full">
                                 <option value="" disabled selected>Sélectionner</option>
                                 <option value="rwd">RWD</option>
                                 <option value="fwd">FWD</option>
                                 <option value="4wd">4WD</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="type">Type de Carrosserie :</label>
-                            <select id="type" name="type" required>
+                        <!-- Type de Carrosserie -->
+                        <div class="form-group flex flex-col">
+                            <label for="type" class="mb-2 text-sm">Type de Carrosserie :</label>
+                            <select id="type" name="type" required class="w-full">
                                 <option value="" disabled selected>Sélectionner un type</option>
                                 <option value="berline">Berline</option>
                                 <option value="suv">SUV</option>
@@ -137,12 +221,13 @@
                                 <option value="minivan">Minivan</option>
                                 <option value="hatchback">Hayon</option>
                                 <option value="wagon">Break (Wagon)</option>
-                                </select>
+                            </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="paint_color">Couleur Extérieure :</label>
-                            <select id="paint_color" name="paint_color" required>
+                        <!-- Couleur Extérieure -->
+                        <div class="form-group flex flex-col">
+                            <label for="paint_color" class="mb-2 text-sm">Couleur Extérieure :</label>
+                            <select id="paint_color" name="paint_color" required class="w-full">
                                 <option value="" disabled selected>Sélectionner une couleur</option>
                                 <option value="blanc">Blanc</option>
                                 <option value="noir">Noir</option>
@@ -153,28 +238,30 @@
                                 <option value="vert">Vert</option>
                                 <option value="jaune">Jaune</option>
                                 <option value="autre">Autre</option>
-                                </select>
+                            </select>
                         </div>
                     </div>
-                    
-                    <button type="submit" class="predict-button">PREDIRE LE PRIX</button>
+
+                    <button type="submit" class="predict-button w-full py-3 text-white font-bold rounded-lg shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75">
+                        PREDIRE LE PRIX
+                    </button>
                 </form>
             </section>
 
             {% if prediction_text %}
-            <section class="prediction-result-section">
-                <h2 class="section-title">Résultat de la Prédiction</h2>
-                <div class="prediction-result">
+            <section class="prediction-result-section mt-10 p-6 bg-blue-50 rounded-lg shadow-inner text-center border border-blue-200">
+                <h2 class="section-title text-xl font-bold mb-4 text-blue-700">Résultat de la Prédiction</h2>
+                <div class="prediction-result text-2xl font-semibold text-blue-800">
                     {{ prediction_text }}
                 </div>
             </section>
             {% endif %}
         </main>
-
-        <footer class="app-footer">
-            <p>&copy; {{ current_year }} Votre Outil d'Estimation. Tous droits réservés.</p>
-        </footer>
     </div>
+
+    <footer class="app-footer bg-gray-800 text-white p-4 text-center mt-8">
+        <p class="text-sm">&copy; {{ current_year }} Votre Outil d'Estimation. Tous droits réservés.</p>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -183,13 +270,13 @@
 
             function updateManufacturerInput() {
                 if (manufacturerSelect.value === 'other_input') {
-                    manufacturerOtherInput.style.display = 'block';
+                    manufacturerOtherInput.classList.remove('hidden'); // Show the input
                     manufacturerOtherInput.removeAttribute('disabled');
                     manufacturerOtherInput.setAttribute('required', 'required');
                     manufacturerOtherInput.setAttribute('name', 'manufacturer');
-                    manufacturerSelect.removeAttribute('name'); 
+                    manufacturerSelect.removeAttribute('name');
                 } else {
-                    manufacturerOtherInput.style.display = 'none';
+                    manufacturerOtherInput.classList.add('hidden'); // Hide the input
                     manufacturerOtherInput.setAttribute('disabled', 'disabled');
                     manufacturerOtherInput.removeAttribute('required');
                     manufacturerOtherInput.value = '';
@@ -199,7 +286,7 @@
             }
 
             manufacturerSelect.addEventListener('change', updateManufacturerInput);
-            updateManufacturerInput();
+            updateManufacturerInput(); // Call on load to set initial state
         });
     </script>
 </body>

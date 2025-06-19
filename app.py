@@ -147,12 +147,12 @@ FINAL_MODEL_FEATURES_LOCAL_PATH = 'final_model_features.joblib'
 
 # Fonction pour télécharger un fichier s'il n'existe pas
 def download_file_if_not_exists(url, local_filename):
-    if not url:
-        print(f"URL for {local_filename} is not set in environment variables. Cannot download.")
-        return False
     if os.path.exists(local_filename):
         print(f"'{local_filename}' already exists locally. Skipping download.")
         return True
+    if not url:
+        print(f"URL for {local_filename} is not set in environment variables. Cannot download.")
+        return False
     print(f"Downloading '{local_filename}' from '{url}'...")
     try:
         with requests.get(url, stream=True) as r:
