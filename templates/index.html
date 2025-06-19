@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prédiction de Prix Automobile -  Car predict </title>
+    <title>Prédiction de Prix Automobile - Votre Outil d'Estimation</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header class="app-header">
-            <h1 class="app-title"><span class="highlight-text">car predictor</span> CAR PRICE PREDICTOR</h1>
-            <p class="app-tagline">Estimez la valeur de votre véhicule avec précision.</p>
+            <h1 class="app-title">CAR PRICE PREDICTOR</h1>
+            <p class="app-tagline">Estimez la valeur de votre véhicule avec précision et simplicité.</p>
         </header>
 
         <main class="main-content">
@@ -172,7 +172,7 @@
         </main>
 
         <footer class="app-footer">
-            <p>&copy; {{ current_year }} Futuristik Car. Tous droits réservés.</p>
+            <p>&copy; {{ current_year }} Votre Outil d'Estimation. Tous droits réservés.</p>
         </footer>
     </div>
 
@@ -186,24 +186,19 @@
                     manufacturerOtherInput.style.display = 'block';
                     manufacturerOtherInput.removeAttribute('disabled');
                     manufacturerOtherInput.setAttribute('required', 'required');
-                    // Important: assure que seul l'input text a le nom 'manufacturer' pour l'envoi du formulaire
                     manufacturerOtherInput.setAttribute('name', 'manufacturer');
                     manufacturerSelect.removeAttribute('name'); 
                 } else {
                     manufacturerOtherInput.style.display = 'none';
                     manufacturerOtherInput.setAttribute('disabled', 'disabled');
                     manufacturerOtherInput.removeAttribute('required');
-                    manufacturerOtherInput.value = ''; // Réinitialise la valeur
-                    // Important: assure que seul le select a le nom 'manufacturer'
+                    manufacturerOtherInput.value = '';
                     manufacturerSelect.setAttribute('name', 'manufacturer');
                     manufacturerOtherInput.removeAttribute('name');
                 }
             }
 
-            // Écoute les changements sur le select de la marque
             manufacturerSelect.addEventListener('change', updateManufacturerInput);
-
-            // Initialise l'état au chargement de la page (au cas où "Autre" serait présélectionné par le navigateur)
             updateManufacturerInput();
         });
     </script>
